@@ -5,7 +5,7 @@ class Node {
   }
 }
 
-class LinkedList {
+export default class LinkedList {
   constructor() {
     this.head = null;
     this.length = 0;
@@ -54,6 +54,12 @@ class LinkedList {
 
   // This is used to find a node at a particular index
   at(index) {
+    if (index < 0 || index >= this.length) {
+      return null;
+    }
+    if (index === 0) {
+      return this.head;
+    }
     let nodeIndex = 0;
     let currentNode = this.head;
     while (nodeIndex < index) {
@@ -80,10 +86,10 @@ class LinkedList {
   }
 
   // This is used to check if the linkedList contains a particular value
-  contains(value){
+  contains(value) {
     let currentNode = this.head;
-    while(currentNode){
-      if(currentNode.value === value){
+    while (currentNode) {
+      if (currentNode.value === value) {
         return true;
       }
       currentNode = currentNode.nextNode;
@@ -92,11 +98,11 @@ class LinkedList {
   }
 
   // This is to find the index of the node containing value, or null if not found.
-  find(value){
+  find(value) {
     let currentNode = this.head;
     let index = 0;
-    while(currentNode){
-      if(currentNode.value === value){
+    while (currentNode) {
+      if (currentNode.value === value) {
         return index;
       }
       currentNode = currentNode.nextNode;
@@ -105,15 +111,50 @@ class LinkedList {
     return null;
   }
 
-  toString(){
+  // This is to insert values to the list at a particular index
+  insertAT(value, index) {
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+    if (index >= this.length) {
+      this.append(value);
+      return;
+    }
+    const newNode = new Node(value);
+    const previousNode = this.at(index - 1);
+    const nextNode = previousNode.nextNode;
+    previousNode.nextNode = newNode;
+    newNode.nextNode = nextNode;
+    this.length++;
+  }
+
+
+  // This is to remove a node at a particular index
+  removeAT(index) {
+    if (index === 0) {
+      this.head = this.head.nextNode;
+      this.length--;
+      return;
+    }
+    if (index >= this.length) {
+      return;
+    }
+    const previousNode = this.at(index - 1);
+    const nextNode = this.at(index + 1);
+    previousNode.nextNode = nextNode;
+    this.length--;
+  }
+
+  // This is to print the values in the node
+  toString() {
     let currentNode = this.head;
-    let string = '';
-    while(currentNode){
+    let string = "";
+    while (currentNode) {
       string += `( ${currentNode.value} ) -> `;
       currentNode = currentNode.nextNode;
     }
-    string += 'null';
+    string += "null";
     return string;
   }
-  
 }
