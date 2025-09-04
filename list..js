@@ -78,4 +78,16 @@ class LinkedList {
     this.length--;
     return this;
   }
+
+  // This is used to check if the linkedList contains a particular value
+  contains(value){
+    let currentNode = this.head;
+    while(currentNode){
+      if(currentNode.value === value){
+        return true;
+      }
+      currentNode = currentNode.nextNode;
+    }
+    return false;
+  }
 }
