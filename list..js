@@ -1,3 +1,10 @@
+class Node {
+  constructor(value = null) {
+    this.value = value;
+    this.nextNode = null;
+  }
+}
+
 class LinkedList {
   constructor() {
     this.head = null;
@@ -33,7 +40,8 @@ class LinkedList {
     return this.length;
   }
 
-  tail(){
+  // This is to return the last node in the list
+  tail() {
     let currentNode = this.head;
     if (!currentNode) {
       return null;
@@ -44,10 +52,30 @@ class LinkedList {
     return currentNode;
   }
 
-}
-class Node {
-  constructor(value = null) {
-    this.value = value;
-    this.nextNode = null;
+  // This is used to find a node at a particular index
+  at(index) {
+    let nodeIndex = 0;
+    let currentNode = this.head;
+    while (nodeIndex < index) {
+      currentNode = currentNode.nextNode;
+      nodeIndex++;
+    }
+    return currentNode;
+  }
+
+  // This is used to remove the last element in the linked list
+  pop() {
+    if (!this.head) {
+      return null;
+    }
+    if (this.length === 1) {
+      this.head = null;
+      this.length = 0;
+      return this;
+    }
+    const secondToLastNode = this.at(this.length - 2);
+    secondToLastNode.nextNode = null;
+    this.length--;
+    return this;
   }
 }
